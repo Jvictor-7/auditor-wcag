@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Teste de Acessibilidade</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      color: #777777; /* baixo contraste */
+    }
+
+    .btn {
+      background-color: #cccccc;
+      color: #ffffff; /* baixo contraste */
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Teste de Acessibilidade</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      color: #777777;
+    }
+
+    .btn {
+      background-color: #cccccc;
+      color: #ffffff;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Clique aqui</h1>
+
+  <img src="banner.jpg">
+
+  <p><a href="#">Clique aqui</a> para saber mais.</p>
+
+  <form>
+    Nome: <input type="text" name="nome"><br><br>
+
+    <input type="checkbox" name="termos"> Aceito os termos<br><br>
+
+    <select name="categoria">
+      <option value="">Selecione</option>
+      <option value="a">Categoria A</option>
+      <option value="b">Categoria B</option>
+    </select>
+
+    <br><br>
+
+    <button class="btn">Enviar</button>
+  </form>
+
+  <button onclick="alert('ok')">
+    <img src="icon.png">
+  </button>
+
+  <div onclick="alert('clicou')" style="margin-top:20px; background:#eee; padding:10px;">
+    Clique com o mouse
+  </div>
+
+  <video controls>
+    <source src="video.mp4" type="video/mp4">
+  </video>
+
+  <p style="color:#aaa;">Texto com contraste insuficiente</p>
+
+  <p>Campos obrigatórios estão em <span style="color:red;">vermelho</span></p>
+
+  <input type="text" style="outline:none;">
+
+  <div id="mensagem" class="hidden">Mensagem enviada com sucesso!</div>
+
+  <script>
+    function mostrarMensagem() {
+      document.getElementById("mensagem").classList.remove("hidden");
+    }
+  </script>
+
+</body>
+</html>
+
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Clique aqui</h1> <!-- Título pouco descritivo -->
+
+  <!-- IMAGEM SEM ALT -->
+  <img src="banner.jpg">
+
+  <!-- LINK GENÉRICO -->
+  <p><a href="#">Clique aqui</a> para saber mais.</p>
+
+  <!-- FORMULÁRIO SEM LABEL -->
+  <form>
+    Nome: <input type="text" name="nome"><br><br>
+
+    <input type="checkbox" name="termos"> Aceito os termos<br><br>
+
+    <select name="categoria">
+      <option value="">Selecione</option>
+      <option value="a">Categoria A</option>
+      <option value="b">Categoria B</option>
+    </select>
+
+    <br><br>
+
+    <button class="btn">Enviar</button>
+  </form>
+
+  <!-- BOTÃO SEM TEXTO ACESSÍVEL -->
+  <button onclick="alert('ok')">
+    <img src="icon.png">
+  </button>
+
+  <!-- ELEMENTO INTERATIVO NÃO ACESSÍVEL POR TECLADO -->
+  <div onclick="alert('clicou')" style="margin-top:20px; background:#eee; padding:10px;">
+    Clique com o mouse
+  </div>
+
+  <!-- VÍDEO SEM LEGENDA -->
+  <video controls>
+    <source src="video.mp4" type="video/mp4">
+  </video>
+
+  <!-- TEXTO COM BAIXO CONTRASTE -->
+  <p style="color:#aaa;">Texto com contraste insuficiente</p>
+
+  <!-- USO DE COR COMO ÚNICA INFORMAÇÃO -->
+  <p>Campos obrigatórios estão em <span style="color:red;">vermelho</span></p>
+
+  <!-- SEM FOCO VISÍVEL -->
+  <input type="text" style="outline:none;">
+
+  <!-- CONTEÚDO DINÂMICO SEM ARIA -->
+  <div id="mensagem" class="hidden">Mensagem enviada com sucesso!</div>
+
+  <script>
+    function mostrarMensagem() {
+      document.getElementById("mensagem").classList.remove("hidden");
+    }
+  </script>
+
+</body>
+</html>

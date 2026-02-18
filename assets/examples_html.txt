@@ -1,0 +1,59 @@
+#test1 - Imagem sem texto alternativo (WCAG 1.1.1)
+<img src="logo.png">
+
+#test2 - Imagem com alt vazio indevido (WCAG 1.1.1)
+<img src="banner.png" alt="">
+
+#test3 - Input sem label (WCAG 1.3.1 / 3.3.2)
+<form>
+  <input type="text">
+</form>
+
+#test4 - Label não associado ao input (WCAG 1.3.1)
+<form>
+  <label>Email</label>
+  <input type="email">
+</form>
+
+#test5 - Botão com texto genérico (WCAG 2.4.4)
+<form>
+  <button>Clique aqui</button>
+</form>
+
+#test6 - Botão sem nome acessível (WCAG 4.1.2)
+<form>
+  <button>
+    <svg></svg>
+  </button>
+</form>
+
+#test7 - Link com texto genérico (WCAG 2.4.4)
+<a href="/detalhes">Clique aqui</a>
+
+#test8 - Campo obrigatório sem indicação programática (WCAG 3.3.2)
+<form>
+  <label for="nome">Nome *</label>
+  <input id="nome" type="text">
+</form>
+
+#test9 - Hierarquia incorreta de títulos (WCAG 1.3.1)
+<h1>Título Principal</h1>
+<h3>Subseção</h3>
+
+#test10 - Grupo de radio sem fieldset e legend (WCAG 1.3.1)
+<form>
+  <input type="radio" name="sexo"> Masculino
+  <input type="radio" name="sexo"> Feminino
+</form>
+
+#test11 - Múltiplas falhas combinadas
+<img src="produto.png">
+
+<form>
+  <input type="text" placeholder="Nome">
+  <button>
+    <svg></svg>
+  </button>
+</form>
+
+<a href="/mais">Clique aqui</a>

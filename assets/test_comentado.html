@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Página de Teste WCAG</title>
+</head>
+<body>
+
+  <h1>Bem-vindo ao Portal</h1>
+
+  <!-- WCAG 1.1.1 (Nível A): Conteúdo não textual sem texto alternativo -->
+  <img src="logo.png">
+
+  <!-- WCAG 1.1.1 (Nível A): Imagem funcional sem texto alternativo -->
+  <a href="/home">
+    <img src="home-icon.png">
+  </a>
+
+  <nav>
+    <ul>
+      <!-- WCAG 2.4.4 (Nível A): Texto de link genérico sem propósito claro -->
+      <li><a href="/produtos">Clique aqui</a></li>
+
+      <!-- WCAG 2.4.4 (Nível A): Texto de link genérico -->
+      <li><a href="/contato">Saiba mais</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <h2>Cadastro</h2>
+
+    <form action="/cadastro" method="post">
+
+      <!-- WCAG 1.3.1 (Nível A): Campo de formulário sem associação com label -->
+      <input type="text" name="nome">
+
+      <!-- WCAG 1.3.1 (Nível A): Label não associado programaticamente -->
+      <label>Email</label>
+      <input type="email" name="email">
+
+      <!-- WCAG 1.3.1 (Nível A): Campo obrigatório sem indicação programática -->
+      <input type="password" name="senha">
+
+      <!-- WCAG 4.1.2 (Nível A): Botão sem texto acessível -->
+      <button></button>
+
+    </form>
+
+    <section>
+
+      <h2>Vídeo Institucional</h2>
+
+      <!-- WCAG 1.2.1 (Nível A): Vídeo sem alternativa textual -->
+      <video src="institucional.mp4"></video>
+
+    </section>
+
+    <section>
+
+      <h2>Pesquisa</h2>
+
+      <!-- WCAG 1.3.1 (Nível A): Select sem label associado -->
+      <select name="categoria">
+        <option value="">Selecione</option>
+        <option value="a">Categoria A</option>
+        <option value="b">Categoria B</option>
+      </select>
+
+    </section>
+
+    <section>
+
+      <h2>Conteúdo Interativo</h2>
+
+      <!-- WCAG 4.1.2 (Nível A): Elemento com role incorreto -->
+      <div role="button">
+        Enviar
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

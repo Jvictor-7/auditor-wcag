@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Página de Teste WCAG</title>
+</head>
+<body>
+
+  <h1>Bem-vindo ao Portal</h1>
+
+  <img src="logo.png">
+
+  <a href="/home">
+    <img src="home-icon.png">
+  </a>
+
+  <nav>
+    <ul>
+      <li><a href="/produtos">Clique aqui</a></li>
+      <li><a href="/contato">Saiba mais</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <h2>Cadastro</h2>
+
+    <form action="/cadastro" method="post">
+      <input type="text" name="nome">
+
+      <label>Email</label>
+      <input type="email" name="email">
+
+      <input type="password" name="senha">
+
+      <button></button>
+    </form>
+
+    <section>
+      <h2>Vídeo Institucional</h2>
+      <video src="institucional.mp4"></video>
+    </section>
+
+    <section>
+      <h2>Pesquisa</h2>
+      <select name="categoria">
+        <option value="">Selecione</option>
+        <option value="a">Categoria A</option>
+        <option value="b">Categoria B</option>
+      </select>
+    </section>
+
+    <section>
+      <h2>Conteúdo Interativo</h2>
+      <div role="button">
+        Enviar
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

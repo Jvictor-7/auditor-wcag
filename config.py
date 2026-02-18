@@ -6,7 +6,7 @@ load_dotenv()
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-MODEL = "openai/gpt-4o-mini"
+MODEL = "anthropic/claude-sonnet-4.5"
 
 if not OPENROUTER_API_KEY:
     raise RuntimeError(
