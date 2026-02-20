@@ -1,0 +1,17 @@
+streamlit
+
+langchain==0.1.20
+langchain-core==0.1.52
+langchain-community==0.0.38
+langchain-openai==0.1.7
+
+chromadb==0.4.24
+tiktoken
+openai
+
+reportlab
+python-dotenv
+
+beautifulsoup4
+requests
+lxml
