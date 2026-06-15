@@ -3,6 +3,35 @@ from rag import analyze_html, get_vectorstore_chunks
 from pdf import gerar_pdf_relatorio
 
 # ------------------------------------------------
+# Tradução do botão "Browse files" para português
+# ------------------------------------------------
+st.markdown("""
+<script>
+function translateUploader() {
+    const observer = new MutationObserver(() => {
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.textContent.trim() === 'Browse files') {
+                btn.textContent = 'Escolher arquivo';
+            }
+        });
+        document.querySelectorAll('small').forEach(el => {
+            if (el.textContent.includes('Limit')) {
+                el.textContent = 'Limite de 10MB por arquivo';
+            }
+        });
+        document.querySelectorAll('span').forEach(el => {
+            if (el.textContent.trim() === 'Drag and drop file here') {
+                el.textContent = 'Arraste e solte o arquivo aqui';
+            }
+        });
+    });
+    observer.observe(document.body, {childList: true, subtree: true});
+}
+translateUploader();
+</script>
+""", unsafe_allow_html=True)
+
+# ------------------------------------------------
 # Cabeçalho
 # ------------------------------------------------
 st.title("Auditor de Acessibilidade WCAG")

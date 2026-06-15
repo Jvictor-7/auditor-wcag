@@ -1,0 +1,10 @@
+[general]
+showSidebarNavigation = false
+
+[server]
+maxUploadSize = 10
+
+[theme]
+
+[browser]
+gatherUsageStats = false
