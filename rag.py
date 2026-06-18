@@ -7,7 +7,7 @@ from collections import Counter
 import streamlit as st
 from bs4 import BeautifulSoup
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain.schema import Document
@@ -86,16 +86,17 @@ def split_by_wcag_criteria(documents: list) -> list:
 # Carrega a WCAG e aplica chunking semântico
 # ============================================================
 # ============================================================
-# CORREÇÃO: Cache do Vectorstore com Streamlit
+# CORREÇÃO: FAISS Vector Store (sem SQLite)
 # ============================================================
-# Usa @st.cache_resource para manter ChromaDB em cache durante
-# a sessão, evitando sqlite3.OperationalError em produção
-# (Streamlit Cloud, Hugging Face Spaces, etc.)
+# Usa FAISS em vez de ChromaDB para evitar sqlite3.OperationalError
+# em produção. FAISS é um vector store in-memory puro.
+# @st.cache_resource persiste entre requisições da sessão.
 
 @st.cache_resource
 def load_vectorstore():
     """
-    Carrega e inicializa o vectorstore ChromaDB com WCAG 2.1 + Técnicas de Falha.
+    Carrega e inicializa o vectorstore FAISS com WCAG 2.1 + Técnicas de Falha.
+    FAISS é um vector store em memória que não usa banco de dados.
     O cache persiste enquanto a sessão Streamlit estiver ativa.
     """
     try:
@@ -126,8 +127,8 @@ def load_vectorstore():
         api_key=OPENAI_API_KEY,
     )
 
-    # Criação do banco vetorial (WCAG + Técnicas de Falha)
-    vectorstore = Chroma.from_documents(
+    # Criação do banco vetorial FAISS (sem SQLite, 100% em memória)
+    vectorstore = FAISS.from_documents(
         documents=all_chunks,
         embedding=embedding_model,
     )
