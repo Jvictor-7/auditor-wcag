@@ -4,6 +4,7 @@ import re
 import logging
 from collections import Counter
 
+import streamlit as st
 from bs4 import BeautifulSoup
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
@@ -84,35 +85,58 @@ def split_by_wcag_criteria(documents: list) -> list:
 # ============================================================
 # Carrega a WCAG e aplica chunking semântico
 # ============================================================
-loader = PyPDFLoader("assets/WCAG21-completo-1-43.pdf")
-docs = loader.load()
-
-chunks = split_by_wcag_criteria(docs)
-
 # ============================================================
-# MELHORIA 4: Adiciona Técnicas de Falha WCAG ao vectorstore
+# CORREÇÃO: Cache do Vectorstore com Streamlit
 # ============================================================
-technique_docs = [
-    Document(
-        page_content=tech["content"],
-        metadata={"type": "technique", "technique_id": tech["id"]},
+# Usa @st.cache_resource para manter ChromaDB em cache durante
+# a sessão, evitando sqlite3.OperationalError em produção
+# (Streamlit Cloud, Hugging Face Spaces, etc.)
+
+@st.cache_resource
+def load_vectorstore():
+    """
+    Carrega e inicializa o vectorstore ChromaDB com WCAG 2.1 + Técnicas de Falha.
+    O cache persiste enquanto a sessão Streamlit estiver ativa.
+    """
+    try:
+        loader = PyPDFLoader("assets/WCAG21-completo-1-43.pdf")
+        docs = loader.load()
+    except FileNotFoundError:
+        st.error("❌ PDF WCAG não encontrado em 'assets/WCAG21-completo-1-43.pdf'")
+        st.stop()
+
+    chunks = split_by_wcag_criteria(docs)
+
+    # ============================================================
+    # MELHORIA 4: Adiciona Técnicas de Falha WCAG ao vectorstore
+    # ============================================================
+    technique_docs = [
+        Document(
+            page_content=tech["content"],
+            metadata={"type": "technique", "technique_id": tech["id"]},
+        )
+        for tech in WCAG_FAILURE_TECHNIQUES
+    ]
+
+    all_chunks = chunks + technique_docs
+
+    # Modelo de embeddings
+    embedding_model = OpenAIEmbeddings(
+        model="text-embedding-3-small",
+        api_key=OPENAI_API_KEY,
     )
-    for tech in WCAG_FAILURE_TECHNIQUES
-]
 
-all_chunks = chunks + technique_docs
+    # Criação do banco vetorial (WCAG + Técnicas de Falha)
+    vectorstore = Chroma.from_documents(
+        documents=all_chunks,
+        embedding=embedding_model,
+    )
+    
+    return vectorstore
 
-# Modelo de embeddings
-embedding_model = OpenAIEmbeddings(
-    model="text-embedding-3-small",
-    api_key=OPENAI_API_KEY,
-)
 
-# Criação do banco vetorial (WCAG + Técnicas de Falha)
-vectorstore = Chroma.from_documents(
-    documents=all_chunks,
-    embedding=embedding_model,
-)
+# Inicializar vectorstore com cache
+vectorstore = load_vectorstore()
 
 
 # ============================================================
