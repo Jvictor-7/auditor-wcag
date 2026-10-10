@@ -14,6 +14,7 @@ from langchain.schema import Document
 
 from config import llm, OPENAI_API_KEY
 from wcag_techniques import WCAG_FAILURE_TECHNIQUES
+from wcag_criteria_levels import WCAG_CRITERIA_LEVELS
 
 logger = logging.getLogger(__name__)
 
@@ -382,6 +383,14 @@ onchange, oninput, redirecionamento automático ou submit automático.
 
 13. Cada sinal pré-detectado deve ser avaliado. Se o sinal corresponder a uma falha WCAG
 comprovável, inclua no relatório. Se não, ignore-o silenciosamente.
+
+14. NÍVEIS DOS CRITÉRIOS — Verificar com precisão:
+   - 2.4.4 "Finalidade do Link" = Nível A (contexto no código)
+   - 2.4.9 "Finalidade do Link (Link Apenas)" = Nível AAA (sem contexto)
+   - 4.1.2 "Nome, Função, Valor" = Nível A (não AA)
+   - 1.4.3 "Contraste Mínimo" = Nível AA
+   - 1.4.6 "Contraste Aprimorado" = Nível AAA
+
 </rules>
 
 <examples>
@@ -544,6 +553,36 @@ def get_vectorstore_chunks() -> list:
 
 
 # ============================================================
+# Correção de níveis de critérios no output
+# ============================================================
+def correct_wcag_levels(report: str) -> str:
+    """
+    Corrige os níveis dos critérios WCAG no relatório baseado no dicionário oficial.
+    Procura por padrões como "Critério X.X.X – ... (Nível Y)" e corrige Y se necessário.
+    """
+    def replace_level(match):
+        criterion_num = match.group(1)
+        title = match.group(2).strip()
+        wrong_level = match.group(3)
+        correct_level = WCAG_CRITERIA_LEVELS.get(criterion_num)
+
+        if correct_level and correct_level != wrong_level:
+            logger.info(
+                f"Corrigindo nível do critério {criterion_num}: {wrong_level} → {correct_level}"
+            )
+            return f"Critério {criterion_num} – {title} (Nível {correct_level})"
+
+        return match.group(0)
+
+    # Padrão: "Critério X.X.X – Título (Nível Y)"
+    # Captura: (1) número (2) título (3) nível (A, AA ou AAA)
+    pattern = r"Critério\s+(\d+\.\d+\.\d+)\s+–\s+([^(]+?)\s*\(Nível\s+(A{1,3})\)"
+    corrected = re.sub(pattern, replace_level, report)
+
+    return corrected
+
+
+# ============================================================
 # Função principal chamada pelo Streamlit
 # ============================================================
 def analyze_html(user_input: str) -> str:
@@ -573,4 +612,9 @@ def analyze_html(user_input: str) -> str:
 
     # Envia para o LLM
     response = llm.invoke(formatted_prompt)
-    return response.content
+    report = response.content
+
+    # Corrige os níveis dos critérios usando o dicionário oficial
+    report = correct_wcag_levels(report)
+
+    return report

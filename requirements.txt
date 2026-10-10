@@ -10,7 +10,8 @@ faiss-cpu==1.14.3
 tiktoken
 openai
 
-reportlab
+weasyprint>=63
+
 python-dotenv
 
 beautifulsoup4
