@@ -52,5 +52,4 @@ htmlcov/
 
 # Local files
 *.log
-packages.txt
 .cache/
